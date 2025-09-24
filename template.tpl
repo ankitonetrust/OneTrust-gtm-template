@@ -571,8 +571,13 @@ function isConsented(logicalTest){
   return logicalTest ? CONSENT.granted : CONSENT.denied;
 }
 
-function isCategoryConsentInCookie(cookie,otCategoryId){
-  return isConsented(cookie.indexOf(otCategoryId + ":1") > -1);
+function isCategoryConsentInCookie(cookie, otCategoryId){
+  if (!otCategoryId) {
+    // No category mapping → set as empty, can not decide consent state
+    return "";
+  }
+  const search = otCategoryId.toUpperCase() + ":1";
+  return isConsented(cookie.toUpperCase().indexOf(search) > -1);
 }
 
 function parseRegionString(regionString){
@@ -1271,5 +1276,4 @@ scenarios: []
 ___NOTES___
 
 Created on 10/4/2022, 11:18:53 AM
-
 
