@@ -92,6 +92,15 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true
       },
       {
+        "type": "TEXT",
+        "name": "customDataLayerName",
+        "displayName": "Custom Data Layer Name",
+        "simpleValueType": true,
+        "valueHint": "e.g. myDataLayer",
+        "help": "Optional. Enter a custom data layer name if you are not using the default \u0027dataLayer\u0027. Leave blank to use the default.",
+        "canBeEmptyString": true
+      },
+      {
         "type": "CHECKBOX",
         "name": "DataDocumentLanguage",
         "checkboxText": "Determine the language from HTML page",
@@ -453,6 +462,10 @@ let scriptURL = 'https://' + data.URL + '/scripttemplates/otSDKStub.js?did=' + d
 
 if (data.DataDocumentLanguage) {
     scriptURL += '&data-document-language=true';
+}
+
+if (data.customDataLayerName && data.customDataLayerName.trim()) {
+    scriptURL += '&data-dLayer-name=' + data.customDataLayerName.trim();
 }
 
 let autoBlockURL = 'https://' + data.URL + '/consent/' + data.Domain + '/OtAutoBlock.js';
