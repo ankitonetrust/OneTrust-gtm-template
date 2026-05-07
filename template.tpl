@@ -96,6 +96,12 @@ ___TEMPLATE_PARAMETERS___
         "name": "DataDocumentLanguage",
         "checkboxText": "Determine the language from HTML page",
         "simpleValueType": true
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "useAuthenticatedConsent",
+        "checkboxText": "Use authenticated consent",
+        "simpleValueType": true
       }
     ],
     "help": "These settings can be found in the Scripts page of your OneTrust tenant."
@@ -449,7 +455,8 @@ Build script from inputs
 - - - - - - - - - - - - -
 */
 let domain = data.Domain;
-let scriptURL = 'https://' + data.URL + '/scripttemplates/otSDKStub.js?did=' + data.Domain;
+let scriptPath = data.useAuthenticatedConsent ? '/consent/'+ data.Domain : '/scripttemplates';
+let scriptURL = 'https://' + data.URL + scriptPath + '/otSDKStub.js?did=' + data.Domain;
 
 if (data.DataDocumentLanguage) {
     scriptURL += '&data-document-language=true';
@@ -465,6 +472,8 @@ const otData = {
 gtagSet('developer_id.dYWJhMj', true);
 
 log(LOGTAG, 'Script Data to load', otData);
+
+log(LOGTAG, 'data', data);
 
 /*
 - - - - - - - - - - - - - - - - - - - - - - - - -
